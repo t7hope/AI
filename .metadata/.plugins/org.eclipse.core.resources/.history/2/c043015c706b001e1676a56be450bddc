@@ -1,0 +1,52 @@
+ackage bai1;
+import javax.swing.*;
+
+import java.awt.*;
+import java.awt.event.*;
+
+public class MovingObject extends JPanel {
+    private int x = 50;
+    private int y = 50;
+
+    public MovingObject() {
+        setFocusable(true);
+        addKeyListener(new KeyAdapter() {
+            public void keyPressed(KeyEvent e) {
+                moveObject(e);
+            }
+        });
+    }
+
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        g.setColor(Color.RED);
+        g.fillRect(x, y, 50, 50);
+    }
+
+    private void moveObject(KeyEvent e) {
+        int keyCode = e.getKeyCode();
+        switch (keyCode) {
+            case KeyEvent.VK_UP:
+                y -= 10;
+                break;
+            case KeyEvent.VK_DOWN:
+                y += 10;
+                break;
+            case KeyEvent.VK_LEFT:
+                x -= 10;
+                break;
+            case KeyEvent.VK_RIGHT:
+                x += 10;
+                break;
+        }
+        repaint();
+    }
+
+    public static void main(String[] args) {
+        JFrame frame = new JFrame("Moving Object");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(400, 400);
+        frame.add(new MovingObject());
+        frame.setVisible(true);
+    }
+}

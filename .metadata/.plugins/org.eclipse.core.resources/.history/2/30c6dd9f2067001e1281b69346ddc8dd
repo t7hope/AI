@@ -1,0 +1,9 @@
+package bfs;
+
+public class Node {
+	int state; //
+	boolean visited;
+	List<Node> neighbours;
+	Node parent;
+
+}

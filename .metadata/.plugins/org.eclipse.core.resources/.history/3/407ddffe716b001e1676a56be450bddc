@@ -1,0 +1,40 @@
+package controller;
+import javax.swing.JFrame;
+import javax.swing.Timer;
+
+import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class BulletGame extends JFrame {
+    private Bullet bullet;
+
+    public BulletGame(int x, int y) {
+        bullet = new Bullet(x, y); // Khởi tạo viên đạn ở tọa độ (0, 100)
+
+        setSize(500, 500);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setVisible(true);
+       
+        Timer timer = new Timer(1, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                bullet.move(); // Di chuyển viên đạn
+                repaint(); // Vẽ lại giao diện
+            }
+        });
+        timer.start();
+    }
+
+    @Override
+    public void paint(Graphics g) {
+        super.paint(g);
+        bullet.paintComponent(g); // Vẽ viên đạn
+    }
+
+    public static void main(String[] args) {
+    	int x =10;
+    	int y =200;
+        new BulletGame(x,y);
+    }
+}

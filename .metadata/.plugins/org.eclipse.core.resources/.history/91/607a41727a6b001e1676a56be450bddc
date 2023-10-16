@@ -1,0 +1,60 @@
+package controller;
+import javax.swing.JFrame;
+import javax.swing.Timer;
+
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class BulletGame extends JFrame {
+    private Bullet bullet;
+
+    public BulletGame(int x, int y, int num) {
+        bullet = new Bullet(x, y,num); // Khởi tạo viên đạn ở tọa độ (0, 100)
+    
+       
+        Timer timer = new Timer(1, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                bullet.move(num); // Di chuyển viên đạn
+                repaint(); // Vẽ lại giao diện
+            }
+        });
+        timer.start();
+    }
+    
+    public Bullet getBullet() {
+		return bullet;
+	}
+
+	public void setBullet(Bullet bullet) {
+		this.bullet = bullet;
+	}
+
+	@Override
+    public void paintComponents(Graphics g) {
+    	// TODO Auto-generated method stub
+    	super.paintComponents(g);
+    	g.setColor(Color.red);
+    	g.fillOval(bullet.getX(), bullet.getY(), 10, 10);
+    }
+//    @Override
+//    protected void paintComponent(Graphics g) {
+//        super.paintComponent(g);
+//        g.setColor(Color.RED);
+//        g.fillOval(x, y, 10, 10); // Vẽ viên đạn dưới dạng hình tròn
+//        
+//    }
+//    @Override
+//    public void paint(Graphics g) {
+//        super.paint(g);
+//        bullet.paintComponent(g); // Vẽ viên đạn
+//    }
+
+//    public static void main(String[] args) {
+//    	int x =10;
+//    	int y =200;
+//      
+//    }
+}

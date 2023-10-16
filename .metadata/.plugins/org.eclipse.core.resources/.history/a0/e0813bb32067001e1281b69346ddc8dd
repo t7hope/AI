@@ -1,0 +1,11 @@
+package bfs;
+
+import java.util.List;
+
+public class Node {
+	int state; //
+	boolean visited;
+	List<Node> neighbours;
+	Node parent;
+
+}

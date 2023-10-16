@@ -1,0 +1,280 @@
+package tuan_10_va_11_Bai23;
+
+import java.awt.BorderLayout;
+
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.ButtonGroup;
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JRadioButtonMenuItem;
+import javax.swing.JToolBar;
+
+public class b23Frame extends JFrame {
+	private ToolBar toolBar;
+	public static final int No_shape = 0;
+	public static final int Square = 1;
+	public static final int Circle = 2;
+	public static final int Line = 3;
+
+	private List<b23Shape> shapes;
+	private boolean start, isFill;
+	private Color color;
+	private int type;
+
+	private JMenu menuFile;
+
+	public b23Frame() {
+		setLayout(new BorderLayout());
+		setTitle("UsingMousePaint");
+		setSize(600, 500);
+		setLocationRelativeTo(null);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+		this.shapes = new ArrayList<>();
+		this.start = false;
+		this.isFill = false;
+		this.color = Color.WHITE;
+		this.type = No_shape;
+
+		DrawPanel drawPanel = new DrawPanel();
+		getContentPane().add(drawPanel);
+
+		setJMenuBar(creatJMenuBar());
+		setVisible(true);
+
+		toolBar = new ToolBar();
+		add(toolBar, BorderLayout.NORTH);
+	}
+
+	class ToolBar extends JToolBar {
+		ActionListener colorAction = new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				String colorCommand = e.getActionCommand();
+				switch (colorCommand) {
+				case "White":
+					setColor(Color.white);
+					// System.out.println(color);
+					break;
+
+				case "Black":
+					setColor(Color.black);
+					// System.out.println(color);
+					break;
+				case "Red":
+					setColor(Color.red);
+				}
+			}
+		};
+
+		public ToolBar() {
+			ButtonGroup colorGroup = new ButtonGroup();
+
+			JRadioButton whiteButton = new JRadioButton("White");
+			whiteButton.setBackground(Color.white);
+			whiteButton.setActionCommand("White");
+			whiteButton.addActionListener(colorAction);
+
+			JRadioButton blackButton = new JRadioButton("Black");
+			blackButton.setBackground(Color.black);
+			blackButton.setForeground(Color.gray);
+			blackButton.setActionCommand("Black");
+			blackButton.addActionListener(colorAction);
+
+			JRadioButton redButton = new JRadioButton("Red");
+			redButton.setBackground(Color.red);
+			redButton.setActionCommand("Red");
+			redButton.addActionListener(colorAction);
+
+			colorGroup.add(whiteButton);
+			colorGroup.add(blackButton);
+			colorGroup.add(redButton);
+			setBackground(Color.pink);
+			add(whiteButton);
+			add(blackButton);
+			add(redButton);
+		}
+	}
+
+	public JMenuBar creatJMenuBar() {
+
+		// exit action
+		ActionListener exitAction = new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (e.getActionCommand().equals("Exit")) {
+					System.exit(0);
+				}
+
+			}
+		};
+		// shape action
+		ActionListener shapeAction = new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String shapeCommand = e.getActionCommand();
+				switch (shapeCommand) {
+				case "Square":
+					setType(b23Frame.Square);
+					// System.out.println(type);
+					break;
+
+				case "Oval":
+					// System.out.println(type);
+					setType(b23Frame.Circle);
+					break;
+				case "Line":
+					setType(b23Frame.Line);
+					break;
+				}
+
+			}
+		};
+
+		JMenuBar menuBar = new JMenuBar();
+
+		// button group
+		ButtonGroup shapeGroup = new ButtonGroup();
+		// menu chinh
+		menuFile = new JMenu("File");
+		JMenu menuShape = new JMenu("Shape");
+
+		// menu item
+		JMenuItem itemExit = new JMenuItem("Exit");
+		itemExit.addActionListener(exitAction);
+
+		JRadioButton line = new JRadioButton("Line");
+		line.setActionCommand("Line");
+		line.addActionListener(shapeAction);
+
+		JRadioButton oval = new JRadioButton("Circle");
+		oval.setActionCommand("Oval");
+		oval.addActionListener(shapeAction);
+
+		JRadioButton rectangle = new JRadioButton("Rectangle");
+		rectangle.setActionCommand("Square");
+		rectangle.addActionListener(shapeAction);
+
+		shapeGroup.add(line);
+		shapeGroup.add(oval);
+		shapeGroup.add(rectangle);
+
+		menuFile.add(itemExit);
+		menuShape.add(line);
+		menuShape.add(oval);
+		menuShape.add(rectangle);
+
+		menuBar.add(menuFile);
+		menuBar.add(menuShape);
+		return menuBar;
+	}
+
+	public ToolBar getToolBar() {
+		return toolBar;
+	}
+
+	public void setToolBar(ToolBar toolBar) {
+		this.toolBar = toolBar;
+	}
+
+	public boolean isStart() {
+		return start;
+	}
+
+	public void setStart(boolean start) {
+		this.start = start;
+	}
+
+	public boolean isFill() {
+		return isFill;
+	}
+
+	public void setFill(boolean isFill) {
+		this.isFill = isFill;
+	}
+
+	public Color getColor() {
+		return color;
+	}
+
+	public void setColor(Color color) {
+		this.color = color;
+	}
+
+//	public int getType() {
+//		return type;
+//	}
+
+	public void setType(int type) {
+		this.type = type;
+	}
+
+//draw
+	class DrawPanel extends JPanel {
+		public DrawPanel() {
+
+			setFocusable(true);
+
+			// click chuot
+			addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					if (e.getButton() == MouseEvent.BUTTON1) {
+						if (start) {
+							start = false;
+						} else {
+							start = true;
+							shapes.add(new b23Shape(new Point(e.getX(), e.getY()), color, type));
+
+						}
+					}
+				}
+			});
+			// di chuot
+			addMouseMotionListener(new MouseAdapter() {
+				@Override
+				public void mouseMoved(MouseEvent e) {
+					if (start) {
+						b23Shape last = shapes.get(shapes.size() - 1);
+						last.resize(e.getX(), e.getY());
+						repaint();
+					}
+				}
+			});
+
+		}
+
+		// draw
+		@Override
+		protected void paintComponent(Graphics g) {
+
+			super.paintComponent(g);
+			for (b23Shape shape : shapes) {
+				shape.draw(g);
+			}
+		}
+
+	}
+
+	public static void main(String[] args) {
+		new b23Frame();
+	}
+
+}

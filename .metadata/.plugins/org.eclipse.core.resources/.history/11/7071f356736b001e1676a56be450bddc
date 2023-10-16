@@ -1,0 +1,134 @@
+package controller;
+
+
+
+import java.awt.Color;
+
+import java.awt.Graphics;
+import java.awt.Point;
+
+public class b23Shape {
+	private Point point, finalPoint;
+
+	Color color;
+	int width, height;
+	int type;
+
+	public b23Shape(Point point, Color color, int type) {
+		this.point = point;
+		this.finalPoint = point;
+		this.height = 0;
+		this.width = 0;
+
+		this.color = color;
+		this.type = type;
+	}
+
+	public void resize(int x2, int y2) {
+		int reverseX = (int) (x2 - finalPoint.getX());
+		int reverseY = (int) (y2 - finalPoint.getY());
+
+		this.width = Math.abs(reverseX);
+		this.height = Math.abs(reverseY);
+		if (reverseX < 0) {
+			Point p = new Point();
+			p.setLocation(finalPoint.getX() - width, finalPoint.getY());
+			this.setPoint(p);
+		}
+		if (reverseY < 0) {
+			Point p = new Point();
+			p.setLocation(finalPoint.getX(), finalPoint.getY() - height);
+			this.setPoint(p);
+		}
+		if (reverseX < 0 && reverseY < 0) {
+			Point p = new Point();
+			p.setLocation(x2, y2);
+			this.setPoint(p);
+		}
+
+	}
+
+	public void draw(Graphics g) {
+		g.setColor(color);
+		switch (type) {
+		case b23Frame.Circle:
+
+			g.drawOval((int) point.getX(), (int) point.getY(), width, height);
+
+			break;
+		case b23Frame.Square:
+
+			g.drawRect((int) point.getX(), (int) point.getY(), width, height);
+
+			break;
+		case b23Frame.Line:
+			g.drawLine((int) point.getX(), (int) point.getY(), width, height);
+			break;
+		}
+
+	}
+
+	public int getType() {
+		return type;
+	}
+
+	public void setType(int type) {
+		this.type = type;
+	}
+
+//	public int getX() {
+//		return x;
+//	}
+//
+//	public void setX(int x) {
+//		this.x = x;
+//	}
+//
+//	public int getY() {
+//		return y;
+//	}
+//
+//	public void setY(int y) {
+//		this.y = y;
+//	}
+	public int getWidth() {
+		return width;
+	}
+
+	public void setWidth(int width) {
+		this.width = width;
+	}
+
+	public int getHeight() {
+		return height;
+	}
+
+	public void setHeight(int height) {
+		this.height = height;
+	}
+
+	public Point getPoint() {
+		return point;
+	}
+
+	public void setPoint(Point point) {
+		this.point = point;
+	}
+
+	public Point getFinalPoint() {
+		return finalPoint;
+	}
+
+	public void setFinalPoint(Point finalPoint) {
+		this.finalPoint = finalPoint;
+	}
+
+	public Color getColor() {
+		return color;
+	}
+
+	public void setColor(Color color) {
+		this.color = color;
+	}
+
+}

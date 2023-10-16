@@ -1,0 +1,84 @@
+package bfs;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
+public class Node {
+	int state; //
+	boolean visited;
+	List<Node> neighbours;
+	Node parent;
+
+	public Node(int state) {
+		this.state = state;
+		this.neighbours = new ArrayList<>();
+		this.parent = null;
+
+	}
+
+	public int getState() {
+		return state;
+	}
+
+	public void setState(int state) {
+		this.state = state;
+	}
+
+	public boolean isVisited() {
+		return visited;
+	}
+
+	public void setVisited(boolean visited) {
+		this.visited = visited;
+	}
+
+	public List<Node> getNeighbours() {
+		return neighbours;
+	}
+
+	public void addNeighbours(Node ...neighbourNode) {
+		 for (Node neighbor : neighbours) {
+	            this.getNeighbours().add(neighbor);
+	            neighbor.getNeighbours().add(this);
+	            neighbor.setParent(this);
+	        }
+	}
+
+	public void setNeighbours(List<Node> neighbours) {
+		this.neighbours = neighbours;
+	}
+
+	public Node getParent() {
+		return parent;
+	}
+
+	public void setParent(Node parent) {
+		this.parent = parent;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(neighbours, parent, state, visited);
+	}
+
+	@Override
+	public String toString() {
+		return "Node [state=" + state + ", visited=" + visited + ", neighbours=" + neighbours + ", parent=" + parent
+				+ "]";
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Node other = (Node) obj;
+		return Objects.equals(neighbours, other.neighbours) && Objects.equals(parent, other.parent)
+				&& state == other.state && visited == other.visited;
+	}
+
+}

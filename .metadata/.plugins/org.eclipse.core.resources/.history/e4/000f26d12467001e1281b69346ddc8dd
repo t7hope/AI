@@ -1,0 +1,40 @@
+package bfs;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedDeque;
+
+public class BFS {
+	public void bfsUsingQueue(Node initial, int goal) {
+		if(initial.getState()== goal) {
+			System.out.println(initial.getState());
+		}
+		List<Node> rs = new ArrayList<>();
+		Queue<Node> queue = new ConcurrentLinkedDeque<Node>();
+		queue.add(initial);
+		initial.setVisited(true);
+		rs.add(initial);
+		while(!queue.isEmpty()) {
+			Node node = queue.poll();
+			if(node.getNeighbours() != null) {
+				for (Node neighbour : node.getNeighbours()) {
+					if(!neighbour.isVisited()) {
+						neighbour.setVisited(true);
+						if(neighbour.getState() == goal) {
+							String s="";
+							while(neighbour!=initial) {
+								s = neighbour.getState() + " "+s;
+								neighbour= neighbour.getParent();
+							}
+							System.out.println(initial.getState()+" "+s);
+							return;
+						}
+					}
+				}
+			}
+		}
+	}
+
+}

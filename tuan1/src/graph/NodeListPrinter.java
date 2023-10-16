@@ -1,0 +1,11 @@
+package graph;
+
+import java.util.List;
+
+public class NodeListPrinter {
+    public static void print(List<Node> nodes) {
+        for (Node node : nodes) {
+            System.out.print(node.getObject() + " ");
+        }
+    }
+}

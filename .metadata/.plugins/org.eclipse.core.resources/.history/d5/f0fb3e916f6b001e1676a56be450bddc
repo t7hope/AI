@@ -1,0 +1,38 @@
+package bai1;
+import javax.swing.JFrame;
+import javax.swing.Timer;
+
+import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class BulletGame extends JFrame {
+    private Bullet bullet;
+
+    public BulletGame() {
+        bullet = new Bullet(0, 100); // Khởi tạo viên đạn ở tọa độ (0, 100)
+
+        setSize(500, 500);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setVisible(true);
+
+        Timer timer = new Timer(10, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                bullet.move(); // Di chuyển viên đạn
+                repaint(); // Vẽ lại giao diện
+            }
+        });
+        timer.start();
+    }
+
+    @Override
+    public void paint(Graphics g) {
+        super.paint(g);
+        bullet.paintComponent(g); // Vẽ viên đạn
+    }
+
+    public static void main(String[] args) {
+        new BulletGame();
+    }
+}
